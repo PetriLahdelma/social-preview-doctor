@@ -8,7 +8,11 @@
     "declaration": true,
     "sourceMap": true,
     "strict": true,
-    "preserveShebang": true
+    "types": [
+      "node"
+    ]
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
