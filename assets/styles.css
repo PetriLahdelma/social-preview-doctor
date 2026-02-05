@@ -1,0 +1,71 @@
+:root {
+  --bg: #0b0d12;
+  --card: #121622;
+  --border: rgba(255,255,255,0.08);
+  --text: #e6e9f2;
+  --muted: #a3acc2;
+  --accent: linear-gradient(120deg, var(--accent-a), var(--accent-b));
+  --shadow: 0 24px 80px rgba(0,0,0,0.45);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif; }
+body { width: var(--w); height: var(--h); display: grid; place-items: center; }
+.vignette::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(120% 120% at 50% 30%, transparent 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none;
+}
+.canvas {
+  width: calc(var(--w) - 120px);
+  height: calc(var(--h) - 120px);
+  padding: 56px 64px;
+  border-radius: 28px;
+  background: color-mix(in oklab, var(--card) 92%, black 8%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-rows: auto auto auto auto 1fr auto;
+  gap: 18px;
+}
+.logo {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--accent);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+.title { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
+.tagline { font-size: 18px; color: var(--muted); max-width: 760px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+}
+.proof {
+  font-size: 13px;
+  color: var(--muted);
+}
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.before-after .card {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  padding: 16px;
+  min-height: 88px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+.card h4 { margin: 0 0 6px 0; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.card p { margin: 0; font-size: 14px; }
+.footer { font-size: 12px; color: var(--muted); }
