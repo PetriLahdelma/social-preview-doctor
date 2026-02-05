@@ -26,7 +26,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "render": "node scripts/render-hero.mjs && node scripts/render-og.mjs && node scripts/render-before-after.mjs && node scripts/render-readme.mjs",
     "brand:build": "node scripts/brand-build.mjs",
-    "brand:screenshots": "node scripts/brand-screenshots.mjs"
+    "brand:screenshots": "node scripts/brand-screenshots.mjs",
+    "brand:demo": "node scripts/brand-demo.mjs"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12"

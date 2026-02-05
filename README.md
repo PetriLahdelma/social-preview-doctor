@@ -42,7 +42,7 @@ npx social-preview-doctor https://example.com
 ```
 
 ## Demo
-![Terminal Demo](branding/screenshots/terminal-demo.svg)
+![Demo](branding/demos/demo.gif)
 
 ```bash
 social-preview-doctor https://example.com --json
