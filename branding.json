@@ -1,0 +1,60 @@
+{
+  "name": "social-preview-doctor",
+  "tagline": "Debug OG/Twitter previews with real crawler headers.",
+  "accent": [
+    "#22c55e",
+    "#3b82f6"
+  ],
+  "logo": "assets/logo.svg",
+  "badges": [
+    {
+      "label": "version",
+      "value": "v0.1.0"
+    },
+    {
+      "label": "license",
+      "value": "MIT"
+    },
+    {
+      "label": "ci",
+      "value": "passing"
+    },
+    {
+      "label": "stars",
+      "value": "github"
+    }
+  ],
+  "badgesMd": [
+    {
+      "label": "CI",
+      "url": "https://github.com/PetriLahdelma/social-preview-doctor/actions/workflows/ci.yml/badge.svg"
+    },
+    {
+      "label": "Release",
+      "url": "https://img.shields.io/github/v/release/PetriLahdelma/social-preview-doctor"
+    },
+    {
+      "label": "License",
+      "url": "https://img.shields.io/github/license/PetriLahdelma/social-preview-doctor"
+    },
+    {
+      "label": "Stars",
+      "url": "https://img.shields.io/github/stars/PetriLahdelma/social-preview-doctor"
+    }
+  ],
+  "proof": "Proof: detect broken previews before they ship.",
+  "beforeAfter": {
+    "before": "Previews show wrong image/title",
+    "after": "Exact tags validated in CI"
+  },
+  "quickstart": "```bash\nnpx social-preview-doctor https://example.com\n```",
+  "demo": "```bash\nsocial-preview-doctor https://example.com --json\n```",
+  "why": "Social crawlers are picky. This checks headers, redirects, and OG/Twitter tags in the same way they do.",
+  "faq": "- **Does it follow redirects?** Yes, up to `--max-redirects`.\n- **Can it fail CI?** Yes, via baseline diffs.",
+  "contributing": "See `CONTRIBUTING.md` for the workflow and tests.",
+  "license": "MIT",
+  "hero": {
+    "width": 1600,
+    "height": 900
+  }
+}
