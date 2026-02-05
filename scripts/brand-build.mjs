@@ -195,6 +195,94 @@ function pillGroup({ x, y, labels, fontSize = 24 }) {
   return pills.join("\n");
 }
 
+function wrapLines(text, maxWidth, fontSize, maxLines = 2) {
+  if (!text) return [""];
+  const approxCharWidth = fontSize * 0.56;
+  const maxChars = Math.max(8, Math.floor(maxWidth / approxCharWidth));
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines = [];
+  let current = "";
+
+  for (const word of words) {
+    const next = current ? `${current} ${word}` : word;
+    if (next.length <= maxChars) {
+      current = next;
+    } else {
+      if (current) lines.push(current);
+      current = word;
+    }
+  }
+  if (current) lines.push(current);
+
+  if (lines.length <= maxLines) return lines;
+
+  const kept = lines.slice(0, maxLines);
+  const remaining = lines.slice(maxLines - 1).join(" ");
+  let last = remaining;
+  if (last.length > maxChars) {
+    last = `${last.slice(0, Math.max(0, maxChars - 3))}...`;
+  }
+  kept[maxLines - 1] = last;
+  return kept;
+}
+
+function renderTextLines({ x, y, lines, fontSize, lineHeight, fill, weight = null, letterSpacing = null }) {
+  return lines.map((line, index) => {
+    const attrs = [
+      `x=\"${x}\"`,
+      `y=\"${y + index * lineHeight}\"`,
+      `font-size=\"${fontSize}\"`,
+      `fill=\"${fill}\"`
+    ];
+    if (weight) attrs.push(`font-weight=\"${weight}\"`);
+    if (letterSpacing) attrs.push(`letter-spacing=\"${letterSpacing}\"`);
+    return `<text ${attrs.join(" ")}>${line}</text>`;
+  }).join("\n");
+}
+
+function heroAccent(position = "right") {
+  if (position === "none") return "";
+  const preset = position === "bottom"
+    ? {
+        dots: [
+          { x: 1300, y: 660 },
+          { x: 1340, y: 660 },
+          { x: 1380, y: 660 }
+        ],
+        bars: [
+          { x: 1180, y: 700, w: 180, o: 0.35 },
+          { x: 1180, y: 730, w: 220, o: 0.18 },
+          { x: 1180, y: 760, w: 150, o: 0.28 }
+        ]
+      }
+    : {
+        dots: [
+          { x: 1320, y: 260 },
+          { x: 1360, y: 260 },
+          { x: 1400, y: 260 }
+        ],
+        bars: [
+          { x: 1240, y: 300, w: 180, o: 0.35 },
+          { x: 1240, y: 330, w: 220, o: 0.18 },
+          { x: 1240, y: 360, w: 150, o: 0.28 }
+        ]
+      };
+
+  const dots = preset.dots
+    .map((dot) => `<circle cx="${dot.x}" cy="${dot.y}" r="6" fill="${accent}"/>`)
+    .join("\n");
+  const bars = preset.bars
+    .map((bar) => `<rect x="${bar.x}" y="${bar.y}" width="${bar.w}" height="12" rx="6" fill="${accent}" fill-opacity="${bar.o}"/>`)
+    .join("\n");
+
+  return `
+    <g opacity="0.6">
+      ${dots}
+      ${bars}
+    </g>
+  `;
+}
+
 function heroSvg() {
   const width = config.hero?.width ?? 1600;
   const height = config.hero?.height ?? 900;
@@ -203,6 +291,12 @@ function heroSvg() {
   const iconY = 220;
   const grid = buildGridLines(width, height, 80);
   const pills = pillGroup({ x: 760, y: 540, labels: config.pills });
+  const taglineLines = wrapLines(
+    config.tagline,
+    config.heroTaglineWidth ?? 720,
+    config.heroTaglineSize ?? 30,
+    config.heroTaglineLines ?? 2
+  );
   const body = `
     <defs>
       <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(320 340) rotate(45) scale(420)">
@@ -217,16 +311,16 @@ function heroSvg() {
     </g>
     ${iconGroup({ x: iconX, y: iconY, size: iconSize })}
     <text x="760" y="320" font-size="72" font-weight="700" letter-spacing="-0.02em" fill="${system.text}">${config.name}</text>
-    <text x="760" y="380" font-size="30" fill="${system.muted}">${config.tagline}</text>
+    ${renderTextLines({
+      x: 760,
+      y: 380,
+      lines: taglineLines,
+      fontSize: config.heroTaglineSize ?? 30,
+      lineHeight: config.heroTaglineLineHeight ?? 38,
+      fill: system.muted
+    })}
     ${pills}
-    <g opacity="0.6">
-      <circle cx="1320" cy="260" r="6" fill="${accent}"/>
-      <circle cx="1360" cy="260" r="6" fill="${accent}"/>
-      <circle cx="1400" cy="260" r="6" fill="${accent}"/>
-      <rect x="1240" y="300" width="180" height="12" rx="6" fill="${accent}" fill-opacity="0.35"/>
-      <rect x="1240" y="330" width="220" height="12" rx="6" fill="${accent}" fill-opacity="0.18"/>
-      <rect x="1240" y="360" width="150" height="12" rx="6" fill="${accent}" fill-opacity="0.28"/>
-    </g>
+    ${heroAccent(config.heroAccent ?? "right")}
   `;
   return svgDoc({ width, height, body });
 }
@@ -237,6 +331,12 @@ function socialCardSvg() {
   const iconSize = 240;
   const grid = buildGridLines(width, height, 80);
   const pills = pillGroup({ x: 520, y: 420, labels: config.pills.slice(0, 2), fontSize: 22 });
+  const valueLines = wrapLines(
+    config.value,
+    config.socialValueWidth ?? 640,
+    config.socialValueSize ?? 26,
+    config.socialValueLines ?? 2
+  );
   const body = `
     <defs>
       <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
@@ -251,7 +351,14 @@ function socialCardSvg() {
     </g>
     ${iconGroup({ x: 140, y: 200, size: iconSize })}
     <text x="520" y="270" font-size="60" font-weight="700" letter-spacing="-0.02em" fill="${system.text}">${config.name}</text>
-    <text x="520" y="330" font-size="26" fill="${system.muted}">${config.value}</text>
+    ${renderTextLines({
+      x: 520,
+      y: 330,
+      lines: valueLines,
+      fontSize: config.socialValueSize ?? 26,
+      lineHeight: config.socialValueLineHeight ?? 32,
+      fill: system.muted
+    })}
     ${pills}
     <rect x="980" y="460" width="200" height="12" rx="6" fill="${accent}" fill-opacity="0.25"/>
     <rect x="980" y="488" width="160" height="12" rx="6" fill="${accent}" fill-opacity="0.35"/>
