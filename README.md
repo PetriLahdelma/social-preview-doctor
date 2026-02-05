@@ -3,7 +3,7 @@
   <img alt="social-preview-doctor hero" src="branding/hero.png" width="100%">
 </picture>
 
-# social-preview-doctor
+# Social Preview Doctor
 Debug OG/Twitter previews with real crawler headers. Emulate social bots to validate previews before they ship.
 
 ![CI](https://github.com/PetriLahdelma/social-preview-doctor/actions/workflows/ci.yml/badge.svg) ![Release](https://img.shields.io/github/v/release/PetriLahdelma/social-preview-doctor) ![License](https://img.shields.io/github/license/PetriLahdelma/social-preview-doctor) ![Stars](https://img.shields.io/github/stars/PetriLahdelma/social-preview-doctor)
