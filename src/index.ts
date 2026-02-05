@@ -13,7 +13,36 @@ type Options = {
   bot: BotName;
   maxRedirects: number;
   timeoutMs: number;
+  help: boolean;
 };
+
+const BOT_NAMES: BotName[] = ["linkedin", "twitter", "facebook"];
+
+const HELP_TEXT = `
+social-preview-doctor <url> [options]
+
+Options:
+  --bot <linkedin|twitter|facebook>  User agent preset (default: linkedin)
+  --json                             Emit machine-readable JSON
+  --baseline <path>                  Compare against baseline JSON
+  --update-baseline                  Write baseline JSON and exit
+  --max-redirects <n>                Max redirect hops (default: 5)
+  --timeout <ms>                     Request timeout in ms (default: 15000)
+  -h, --help                         Show help
+
+Exit codes:
+  0 success
+  1 runtime/config error
+  2 baseline diff detected
+`.trim();
+
+function printHelp(): void {
+  console.log(HELP_TEXT);
+}
+
+function isBotName(value: string): value is BotName {
+  return BOT_NAMES.includes(value as BotName);
+}
 
 function parseArgs(argv: string[]): Options {
   const opts: Options = {
@@ -21,7 +50,8 @@ function parseArgs(argv: string[]): Options {
     updateBaseline: false,
     bot: "linkedin",
     maxRedirects: 5,
-    timeoutMs: 15000
+    timeoutMs: 15000,
+    help: false
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -32,43 +62,54 @@ function parseArgs(argv: string[]): Options {
       continue;
     }
     switch (a) {
+      case "--help":
+      case "-h":
+        opts.help = true;
+        break;
       case "--json":
         opts.json = true;
         break;
       case "--baseline":
         opts.baseline = argv[++i];
+        if (!opts.baseline) throw new Error("Missing value for --baseline");
         break;
       case "--update-baseline":
         opts.updateBaseline = true;
         break;
       case "--user-agent":
-        opts.bot = (argv[++i] as BotName) || opts.bot;
+      case "--bot": {
+        const value = argv[++i];
+        if (!value) throw new Error("Missing value for --bot");
+        if (!isBotName(value)) {
+          throw new Error(`Unsupported bot: ${value}`);
+        }
+        opts.bot = value;
         break;
-      case "--max-redirects":
-        opts.maxRedirects = Number(argv[++i] || opts.maxRedirects);
+      }
+      case "--max-redirects": {
+        const value = argv[++i];
+        if (!value) throw new Error("Missing value for --max-redirects");
+        const num = Number(value);
+        if (!Number.isFinite(num) || num < 0) throw new Error("--max-redirects must be >= 0");
+        opts.maxRedirects = num;
         break;
-      case "--timeout":
-        opts.timeoutMs = Number(argv[++i] || opts.timeoutMs);
+      }
+      case "--timeout": {
+        const value = argv[++i];
+        if (!value) throw new Error("Missing value for --timeout");
+        const num = Number(value);
+        if (!Number.isFinite(num) || num <= 0) throw new Error("--timeout must be > 0");
+        opts.timeoutMs = num;
         break;
-      case "--help":
-        printHelp();
-        process.exit(0);
+      }
       default:
-        break;
+        if (a.startsWith("--")) {
+          throw new Error(`Unknown option: ${a}`);
+        }
     }
   }
 
   return opts;
-}
-
-function printHelp(): void {
-  console.log("social-preview-doctor <url> [options]\n");
-  console.log("--user-agent <linkedin|twitter|facebook>");
-  console.log("--json");
-  console.log("--baseline <path>");
-  console.log("--update-baseline");
-  console.log("--max-redirects <n>");
-  console.log("--timeout <ms>");
 }
 
 function pickHeaders(headers: Headers, keys: string[]): Record<string, string> {
@@ -135,10 +176,25 @@ function diffBaseline(current: any, baseline: any): string[] {
 }
 
 async function main() {
-  const opts = parseArgs(process.argv.slice(2));
+  let opts: Options;
+  try {
+    opts = parseArgs(process.argv.slice(2));
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : err);
+    printHelp();
+    process.exit(1);
+    return;
+  }
+
+  if (opts.help) {
+    printHelp();
+    return;
+  }
+
   if (!opts.url) {
     printHelp();
     process.exit(1);
+    return;
   }
 
   const url = opts.url;
