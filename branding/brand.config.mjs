@@ -8,6 +8,7 @@ export default {
   callout: "Run against URLs you trust. The crawler emulation follows redirects and reports missing tags.",
   quickstart: "npx social-preview-doctor https://example.com",
   hero: { width: 1600, height: 900 },
+  heroAccent: "none",
   icon: {
     inner: `
 <rect x="112" y="152" width="288" height="208" rx="28" stroke="{{accent}}" stroke-width="{{stroke}}"/>
