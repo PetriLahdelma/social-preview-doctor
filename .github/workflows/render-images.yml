@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+      - run: npm install --no-package-lock
       - run: npx playwright install --with-deps chromium
       - run: node scripts/render-hero.mjs
       - run: node scripts/render-og.mjs
@@ -24,10 +24,10 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          if git status --porcelain | grep -q .; then
-            git add assets README.md
+          git add assets README.md
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
             git commit -m "chore: update visuals"
             git push
-          else
-            echo "No changes"
           fi
