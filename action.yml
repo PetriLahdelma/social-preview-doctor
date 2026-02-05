@@ -24,9 +24,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: npm install
+    - run: npm ci
       shell: bash
     - run: npm run build
       shell: bash
-    - run: node dist/index.js ${{ inputs.url }} --user-agent ${{ inputs.user_agent }} ${{ inputs.json == 'true' && '--json' || '' }} --baseline ${{ inputs.baseline }} ${{ inputs.update_baseline == 'true' && '--update-baseline' || '' }}
+    - run: node dist/index.js ${{ inputs.url }} --bot ${{ inputs.user_agent }} ${{ inputs.json == 'true' && '--json' || '' }} --baseline ${{ inputs.baseline }} ${{ inputs.update_baseline == 'true' && '--update-baseline' || '' }}
       shell: bash

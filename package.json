@@ -7,7 +7,10 @@
     "social-preview-doctor": "dist/index.js"
   },
   "exports": {
-    ": ": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "files": [
     "dist",
@@ -20,6 +23,7 @@
     "dev": "npm run build && node dist/index.js",
     "lint": "tsc -p tsconfig.json --noEmit",
     "test": "npm run build && node test/parse.test.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "render": "node scripts/render-hero.mjs && node scripts/render-og.mjs && node scripts/render-before-after.mjs && node scripts/render-readme.mjs"
   },
   "dependencies": {
@@ -39,6 +43,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
-    "playwright": "^1.49.0"
+    "playwright": "^1.49.0",
+    "typescript": "^5.5.4"
   }
 }

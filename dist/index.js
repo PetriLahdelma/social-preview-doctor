@@ -3,20 +3,8 @@ import fs from "node:fs";
 import { getHeaders } from "./lib/headers.js";
 import { extractMeta } from "./lib/parse.js";
 import { diagnose } from "./lib/diagnose.js";
-import { BotName, FetchHop } from "./lib/types.js";
 
-type Options = {
-  url?: string;
-  json: boolean;
-  baseline?: string;
-  updateBaseline: boolean;
-  bot: BotName;
-  maxRedirects: number;
-  timeoutMs: number;
-  help: boolean;
-};
-
-const BOT_NAMES: BotName[] = ["linkedin", "twitter", "facebook"];
+const BOT_NAMES = ["linkedin", "twitter", "facebook"];
 
 const HELP_TEXT = `
 social-preview-doctor <url> [options]
@@ -36,16 +24,16 @@ Exit codes:
   2 baseline diff detected
 `.trim();
 
-function printHelp(): void {
+function printHelp() {
   console.log(HELP_TEXT);
 }
 
-function isBotName(value: string): value is BotName {
-  return BOT_NAMES.includes(value as BotName);
+function isBotName(value) {
+  return BOT_NAMES.includes(value);
 }
 
-function parseArgs(argv: string[]): Options {
-  const opts: Options = {
+function parseArgs(argv) {
+  const opts = {
     json: false,
     updateBaseline: false,
     bot: "linkedin",
@@ -112,8 +100,8 @@ function parseArgs(argv: string[]): Options {
   return opts;
 }
 
-function pickHeaders(headers: Headers, keys: string[]): Record<string, string> {
-  const out: Record<string, string> = {};
+function pickHeaders(headers, keys) {
+  const out = {};
   for (const k of keys) {
     const v = headers.get(k);
     if (v) out[k] = v;
@@ -121,8 +109,8 @@ function pickHeaders(headers: Headers, keys: string[]): Record<string, string> {
   return out;
 }
 
-async function fetchChain(url: string, headers: Record<string, string>, maxRedirects: number, timeoutMs: number) {
-  const chain: FetchHop[] = [];
+async function fetchChain(url, headers, maxRedirects, timeoutMs) {
+  const chain = [];
   let current = url;
   for (let i = 0; i <= maxRedirects; i++) {
     const controller = new AbortController();
@@ -131,7 +119,7 @@ async function fetchChain(url: string, headers: Record<string, string>, maxRedir
     clearTimeout(t);
 
     const location = res.headers.get("location") || undefined;
-    const hop: FetchHop = {
+    const hop = {
       url: current,
       status: res.status,
       location,
@@ -161,8 +149,8 @@ async function fetchChain(url: string, headers: Record<string, string>, maxRedir
   return { chain, finalUrl: current, html: "", headers: {} };
 }
 
-function diffBaseline(current: any, baseline: any): string[] {
-  const diffs: string[] = [];
+function diffBaseline(current, baseline) {
+  const diffs = [];
   const keys = new Set([...Object.keys(current.meta || {}), ...Object.keys(baseline.meta || {})]);
   for (const k of keys) {
     const a = current.meta?.[k];
@@ -176,7 +164,7 @@ function diffBaseline(current: any, baseline: any): string[] {
 }
 
 async function main() {
-  let opts: Options;
+  let opts;
   try {
     opts = parseArgs(process.argv.slice(2));
   } catch (err) {
