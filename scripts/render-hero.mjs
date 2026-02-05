@@ -28,7 +28,7 @@ const html = template
   .replace('{{ACCENT_A}}', branding.accent?.[0] || '#6D28D9')
   .replace('{{ACCENT_B}}', branding.accent?.[1] || '#0EA5E9')
   .replace('{{LOGO}}', logo)
-  .replace('{{TITLE}}', branding.name)
+  .replaceAll('{{TITLE}}', branding.name)
   .replace('{{TAGLINE}}', branding.tagline)
   .replace('{{BADGES}}', badges)
   .replace('{{PROOF}}', branding.proof || '')
