@@ -1,38 +1,38 @@
+<picture>
+  <source srcset="branding/hero.svg" type="image/svg+xml">
+  <img alt="social-preview-doctor hero" src="branding/hero.png" width="100%">
+</picture>
+
 # social-preview-doctor
-Debug OG/Twitter previews with real crawler headers.
+Debug OG/Twitter previews with real crawler headers. Emulate social bots to validate previews before they ship.
 
-- Emulates social crawler headers to inspect OG and Twitter tags.
-- Checks headers and redirects the way social bots do.
-- Supports JSON output and baseline diffs for CI.
+![CI](https://github.com/PetriLahdelma/social-preview-doctor/actions/workflows/ci.yml/badge.svg) ![Release](https://img.shields.io/github/v/release/PetriLahdelma/social-preview-doctor) ![License](https://img.shields.io/github/license/PetriLahdelma/social-preview-doctor) ![Stars](https://img.shields.io/github/stars/PetriLahdelma/social-preview-doctor)
 
-**Try in 10 seconds**
+> [!IMPORTANT]
+> Run against URLs you trust. The crawler emulation follows redirects and reports missing tags.
+
+## Quickstart
 ```bash
 npx social-preview-doctor https://example.com
 ```
 
-**Demo**
-Record a run that shows parsed OG/Twitter tags and redirect chain.
+## Demo
+![Terminal Demo](branding/screenshots/terminal-demo.svg)
 
-**Trust & safety**
-This tool makes HTTP requests to the target URL. Run it against URLs you trust.
+```bash
+social-preview-doctor https://example.com --json
+```
 
-Star if this saves you time.  
-→ Buzz Kit: /buzz-kit
+## Docs
+Start here: [Requirements](#requirements) · [Usage](#usage) · [GitHub Action](#github-action) · [JSON Output](#json-output) · [Exit Codes](#exit-codes) · [Troubleshooting](#troubleshooting)
 
-![CI](https://github.com/PetriLahdelma/social-preview-doctor/actions/workflows/ci.yml/badge.svg) ![Release](https://img.shields.io/github/v/release/PetriLahdelma/social-preview-doctor) ![License](https://img.shields.io/github/license/PetriLahdelma/social-preview-doctor) ![Stars](https://img.shields.io/github/stars/PetriLahdelma/social-preview-doctor)
-
-![Hero](assets/hero.png?20260205)
+## Contributing
+See `CONTRIBUTING.md`.
 
 ## Requirements
 
 - Node.js 20+
 - Network access to the target URL
-
-## Quickstart
-
-```bash
-npx social-preview-doctor https://example.com
-```
 
 ## Usage
 
@@ -59,12 +59,6 @@ social-preview-doctor https://example.com --baseline og-baseline.json --update-b
     url: https://example.com
     user_agent: twitter
     json: "true"
-```
-
-## Demo
-
-```bash
-social-preview-doctor https://example.com --json
 ```
 
 ## Why This Exists
@@ -106,10 +100,7 @@ Social crawlers are picky. This checks headers, redirects, and OG/Twitter tags i
 - **Does it follow redirects?** Yes, up to `--max-redirects`.
 - **Can it fail CI?** Yes, via baseline diffs.
 
-## Contributing
-
-See `CONTRIBUTING.md` for the workflow and tests.
-
 ## License
 
 MIT
+

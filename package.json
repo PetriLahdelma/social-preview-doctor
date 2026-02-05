@@ -24,7 +24,9 @@
     "lint": "tsc -p tsconfig.json --noEmit",
     "test": "npm run build && node test/parse.test.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "render": "node scripts/render-hero.mjs && node scripts/render-og.mjs && node scripts/render-before-after.mjs && node scripts/render-readme.mjs"
+    "render": "node scripts/render-hero.mjs && node scripts/render-og.mjs && node scripts/render-before-after.mjs && node scripts/render-readme.mjs",
+    "brand:build": "node scripts/brand-build.mjs",
+    "brand:screenshots": "node scripts/brand-screenshots.mjs"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12"
@@ -44,6 +46,8 @@
   "devDependencies": {
     "@types/node": "^20.11.30",
     "playwright": "^1.49.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "svgo": "^3.3.2",
+    "sharp": "^0.33.5"
   }
 }
