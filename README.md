@@ -8,7 +8,7 @@ Debug OG/Twitter previews with real crawler headers. Emulates real bots so you c
 
 **Type:** CLI (Node.js)
 
-![CI](https://github.com/PetriLahdelma/social-preview-doctor/actions/workflows/ci.yml/badge.svg) ![Release](https://img.shields.io/github/v/release/PetriLahdelma/social-preview-doctor) ![License](https://img.shields.io/github/license/PetriLahdelma/social-preview-doctor) ![Stars](https://img.shields.io/github/stars/PetriLahdelma/social-preview-doctor)
+![CI](https://github.com/PetriLahdelma/social-preview-doctor/actions/workflows/ci.yml/badge.svg) ![Release](https://img.shields.io/github/v/release/PetriLahdelma/social-preview-doctor) ![Provenance](https://img.shields.io/badge/npm%20provenance-verified-brightgreen?logo=npm) ![License](https://img.shields.io/github/license/PetriLahdelma/social-preview-doctor) ![Stars](https://img.shields.io/github/stars/PetriLahdelma/social-preview-doctor)
 
 > [!IMPORTANT]
 > Run against URLs you trust. The crawler emulation follows redirects and reports missing tags.
