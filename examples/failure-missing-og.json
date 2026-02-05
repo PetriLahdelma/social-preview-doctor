@@ -1,0 +1,25 @@
+{
+  "url": "https://example.com",
+  "finalUrl": "https://example.com/",
+  "chain": [
+    {
+      "url": "https://example.com/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "content-type": "text/html"
+      }
+    }
+  ],
+  "meta": {
+    "title": "Example"
+  },
+  "cache": {
+    "content-type": "text/html"
+  },
+  "diagnostics": [
+    "og:image missing",
+    "twitter:card missing"
+  ],
+  "ms": 310
+}

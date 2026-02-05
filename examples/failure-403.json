@@ -1,0 +1,21 @@
+{
+  "url": "https://blocked.example.com",
+  "finalUrl": "https://blocked.example.com",
+  "chain": [
+    {
+      "url": "https://blocked.example.com",
+      "status": 403,
+      "location": null,
+      "headers": {
+        "content-type": "text/html",
+        "x-robots-tag": "noindex"
+      }
+    }
+  ],
+  "meta": {},
+  "cache": {},
+  "diagnostics": [
+    "blocked: 403 for crawler"
+  ],
+  "ms": 180
+}

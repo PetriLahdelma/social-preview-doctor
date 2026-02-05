@@ -1,0 +1,35 @@
+{
+  "url": "https://example.com",
+  "finalUrl": "https://example.com/",
+  "chain": [
+    {
+      "url": "https://example.com",
+      "status": 301,
+      "location": "https://example.com/",
+      "headers": {
+        "cache-control": "max-age=600",
+        "content-type": "text/html"
+      }
+    },
+    {
+      "url": "https://example.com/",
+      "status": 200,
+      "location": null,
+      "headers": {
+        "cache-control": "max-age=600",
+        "content-type": "text/html"
+      }
+    }
+  ],
+  "meta": {
+    "og:title": "Example",
+    "og:image": "https://example.com/og.png",
+    "twitter:card": "summary_large_image"
+  },
+  "cache": {
+    "cache-control": "max-age=600",
+    "content-type": "text/html"
+  },
+  "diagnostics": [],
+  "ms": 420
+}
