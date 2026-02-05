@@ -1,6 +1,23 @@
 # social-preview-doctor
-
 Debug OG/Twitter previews with real crawler headers.
+
+- Emulates social crawler headers to inspect OG and Twitter tags.
+- Checks headers and redirects the way social bots do.
+- Supports JSON output and baseline diffs for CI.
+
+**Try in 10 seconds**
+```bash
+npx social-preview-doctor https://example.com
+```
+
+**Demo**
+Record a run that shows parsed OG/Twitter tags and redirect chain.
+
+**Trust & safety**
+This tool makes HTTP requests to the target URL. Run it against URLs you trust.
+
+Star if this saves you time.  
+→ Buzz Kit: /buzz-kit
 
 ![CI](https://github.com/PetriLahdelma/social-preview-doctor/actions/workflows/ci.yml/badge.svg) ![Release](https://img.shields.io/github/v/release/PetriLahdelma/social-preview-doctor) ![License](https://img.shields.io/github/license/PetriLahdelma/social-preview-doctor) ![Stars](https://img.shields.io/github/stars/PetriLahdelma/social-preview-doctor)
 
