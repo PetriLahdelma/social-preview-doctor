@@ -30,3 +30,7 @@ runs:
       shell: bash
     - run: node dist/index.js ${{ inputs.url }} --bot ${{ inputs.user_agent }} ${{ inputs.json == 'true' && '--json' || '' }} --baseline ${{ inputs.baseline }} ${{ inputs.update_baseline == 'true' && '--update-baseline' || '' }}
       shell: bash
+
+branding:
+  icon: globe
+  color: blue
