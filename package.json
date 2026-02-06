@@ -45,7 +45,7 @@
     "url": "https://github.com/PetriLahdelma/social-preview-doctor/issues"
   },
   "devDependencies": {
-    "@types/node": "^20.11.30",
+    "@types/node": "^25.2.1",
     "playwright": "^1.49.0",
     "typescript": "^5.5.4",
     "svgo": "^3.3.2",
