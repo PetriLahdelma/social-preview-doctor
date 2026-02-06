@@ -2,6 +2,14 @@
   "name": "social-preview-doctor",
   "version": "0.1.1",
   "description": "CLI that emulates social crawlers to debug OG/Twitter previews.",
+  "keywords": [
+    "seo",
+    "open-graph",
+    "twitter-cards",
+    "crawler",
+    "cli",
+    "debugging"
+  ],
   "type": "module",
   "bin": {
     "social-preview-doctor": "dist/index.js"
@@ -22,7 +30,7 @@
     "build": "tsc -p tsconfig.json",
     "dev": "npm run build && node dist/index.js",
     "lint": "tsc -p tsconfig.json --noEmit",
-    "test": "npm run build && node test/parse.test.js",
+    "test": "npm run build && node test/parse.test.js && node test/diagnose.test.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "render": "node scripts/render-hero.mjs && node scripts/render-og.mjs && node scripts/render-before-after.mjs && node scripts/render-readme.mjs",
     "brand:build": "node scripts/brand-build.mjs",
